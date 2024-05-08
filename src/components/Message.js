@@ -1,26 +1,26 @@
-// import React from "react";
-// import { auth } from "./Firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// const Message = ({ message }) => {
-//   const [user] = useAuthState(auth);
+import React from "react";
+import { auth } from "./Firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+const Message = ({ message }) => {
+  const [user] = useAuthState(auth);
 
-//   return (
-//     <div
-//       className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
-//       <img
-//         className="chat-bubble__left"
-//         src={message.avatar}
-//         alt="user avatar"
-//       />
-//       <div className="chat-bubble__right">
-//         <p className="user-name">{message.name}</p>
-//         <p className="user-message">{message.text}</p>
-//       </div>
-//     </div>
+  return (
+    <div
+      className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
+      <img
+        className="chat-bubble__left"
+        src={message.avatar}
+        alt="user avatar"
+      />
+      <div className="chat-bubble__right">
+        <p className="user-name">{message.name}</p>
+        <p className="user-message">{message.text}</p>
+      </div>
+    </div>
 
-//   );
-// };
-// export default Message;
+  );
+};
+export default Message;
 
 // import React, { useState, useEffect } from "react";
 // import { auth } from "./Firebase";
@@ -146,68 +146,68 @@
 
 
 
- import React, { useState, useEffect } from "react";
- import { auth } from "./Firebase";
- import { useAuthState } from "react-firebase-hooks/auth";
- import axios from "axios";
+//  import React, { useState, useEffect } from "react";
+//  import { auth } from "./Firebase";
+//  import { useAuthState } from "react-firebase-hooks/auth";
+//  import axios from "axios";
  
- const Message = ({ message }) => {
-   const [user] = useAuthState(auth);
-   const [translatedMessage, setTranslatedMessage] = useState("");
-   const [sourceLang, setSourceLang] = useState("auto");
+//  const Message = ({ message }) => {
+//    const [user] = useAuthState(auth);
+//    const [translatedMessage, setTranslatedMessage] = useState("");
+//    const [sourceLang, setSourceLang] = useState("auto");
  
-   useEffect(() => {
-     const translateMessage = async () => {
-       try {
-         const response = await axios.post(
-           "http://127.0.0.1:5000/translate",
-           {
-             text: message.text,
-             source_lang: sourceLang,
-             target_lang: sourceLang === "EN" ? "JA" : "EN"
-           }
-         );
-         setTranslatedMessage(response.data.translated_text);
-       } catch (error) {
-         console.error("Error translating message:", error);
-       }
-     };
+//    useEffect(() => {
+//      const translateMessage = async () => {
+//        try {
+//          const response = await axios.post(
+//            "http://127.0.0.1:5000/translate",
+//            {
+//              text: message.text,
+//              source_lang: sourceLang,
+//              target_lang: sourceLang === "EN" ? "JA" : "EN"
+//            }
+//          );
+//          setTranslatedMessage(response.data.translated_text);
+//        } catch (error) {
+//          console.error("Error translating message:", error);
+//        }
+//      };
  
-     if (message.text) {
-       translateMessage();
-     }
-   }, [message.text, sourceLang]);
+//      if (message.text) {
+//        translateMessage();
+//      }
+//    }, [message.text, sourceLang]);
  
-   return (
-     <div
-       className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
-       <img
-         className="chat-bubble__left"
-         src={message.avatar}
-         alt="user avatar"
-       />
-       <div className="chat-bubble__right">
-         <p className="user-name">{message.name}</p>
-         <p className="user-message">{message.text}</p>
-         <div>
-           <label htmlFor="sourceLang">Source Language:</label>
-           <select
-             id="sourceLang"
-             value={sourceLang}
-             onChange={(e) => setSourceLang(e.target.value)}
-           >
-             <option value="auto">Auto Detect</option>
-             <option value="EN">English</option>
-             <option value="JA">Japanese</option>
-           </select>
-         </div>
-         {translatedMessage && (
-           <p className="translated-message">{translatedMessage}</p>
-         )}
-       </div>
-     </div>
-   );
- };
+//    return (
+//      <div
+//        className={`chat-bubble ${message.uid === user.uid ? "right" : ""}`}>
+//        <img
+//          className="chat-bubble__left"
+//          src={message.avatar}
+//          alt="user avatar"
+//        />
+//        <div className="chat-bubble__right">
+//          <p className="user-name">{message.name}</p>
+//          <p className="user-message">{message.text}</p>
+//          <div>
+//            <label htmlFor="sourceLang">Source Language:</label>
+//            <select
+//              id="sourceLang"
+//              value={sourceLang}
+//              onChange={(e) => setSourceLang(e.target.value)}
+//            >
+//              <option value="auto">Auto Detect</option>
+//              <option value="EN">English</option>
+//              <option value="JA">Japanese</option>
+//            </select>
+//          </div>
+//          {translatedMessage && (
+//            <p className="translated-message">{translatedMessage}</p>
+//          )}
+//        </div>
+//      </div>
+//    );
+//  };
  
- export default Message;
+//  export default Message;
  
