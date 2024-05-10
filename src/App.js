@@ -5,6 +5,7 @@ import Welcome from "./components/Welcome";
 import { useState } from "react";
 import { auth } from "./components/Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+// import { ReceivedMessageProvider } from "./components/ReceivedMessageContext";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -17,7 +18,7 @@ function App() {
       ) : (
         <>
           <ChatBox />
-        </>
+          </>
       )}
     </div>
   );

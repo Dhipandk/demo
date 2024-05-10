@@ -1,5 +1,6 @@
 import React from "react";
 import { auth } from "./Firebase";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 const Message = ({ message }) => {
   const [user] = useAuthState(auth);
@@ -14,8 +15,11 @@ const Message = ({ message }) => {
       />
       <div className="chat-bubble__right">
         <p className="user-name">{message.name}</p>
-        <p className="user-message">{message.text}</p>
+        <p className="received-message">{message.translatedtext}</p>
+      
+
       </div>
+      
     </div>
 
   );

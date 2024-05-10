@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { auth, db } from "./Firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import axios from 'axios';
 
 const SendMessage = () => {
 
   const [message, setMessage] = useState("");
+  const { receivedMessage, setReceivedMessage } = useState("");
+  // const [data,setData]=useState([{}]);
+  
+  // useEffect(() => {
+  //   fetch("/send-messaage").then(
+  //     res=>res.json()
+  //   ).then(
+  //     data=>{
+  //       setData(data)
+  //       console.log(data)
+  //     }
+  //   )
+  // },[])
   const sendMessage = async (event) => {
     event.preventDefault();
 
@@ -15,20 +29,43 @@ const SendMessage = () => {
 
     const { uid, displayName, photoURL } = auth.currentUser;
 
-    await addDoc(collection(db, "messages"), {
-      text: message,
-      name: displayName,
-      avatar: photoURL,
-      createdAt: serverTimestamp(),
-      uid,
-    });
 
-    setMessage("");
-  
+
+      // Send message data to Flask backend
+      const response = await axios.post("http://127.0.0.1:5000/send-message", {
+        message: message,
+        displayName: displayName,
+        uid: uid,
+      });
+
+      console.log("Response from Flask:", response.data);
+
+      setReceivedMessage(response.data.message);
+      try {
+        await addDoc(collection(db, "messages"), {
+          text: message,
+          name: displayName,
+          avatar: photoURL,
+          createdAt: serverTimestamp(),
+          uid,
+          translatedtext: receivedMessage
+        });
+
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
+
+
+
+    // setMessage("");
+  
+ 
   
   
   return (
+    <div>
     <form onSubmit={(event) => sendMessage(event)} className="send-message">
       <label htmlFor="messageInput" hidden>
         Enter Message
@@ -44,7 +81,10 @@ const SendMessage = () => {
       />
       <button type="submit">Send</button>
     </form>
+    </div>
   );
+
 };
+
 export default SendMessage;
 
