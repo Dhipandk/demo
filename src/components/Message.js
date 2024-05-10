@@ -15,6 +15,7 @@ const Message = ({ message }) => {
       />
       <div className="chat-bubble__right">
         <p className="user-name">{message.name}</p>
+        <p className="received-message">{message.text}</p>
         <p className="received-message">{message.translatedtext}</p>
       
 

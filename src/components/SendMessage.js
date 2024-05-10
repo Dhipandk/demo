@@ -3,10 +3,10 @@ import { auth, db } from "./Firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import axios from 'axios';
 
-const SendMessage = () => {
+const SendMessage = ({ scroll }) => {
 
   const [message, setMessage] = useState("");
-  const { receivedMessage, setReceivedMessage } = useState("");
+  // const { receivedMessage, setReceivedMessage } = useState("");
   // const [data,setData]=useState([{}]);
   
   // useEffect(() => {
@@ -40,7 +40,13 @@ const SendMessage = () => {
 
       console.log("Response from Flask:", response.data);
 
-      setReceivedMessage(response.data.message);
+      // const updateReceivedMessage = (message) => {
+      //   setReceivedMessage(message);
+      // };
+
+      // updateReceivedMessage(response.data.message);
+
+      // setReceivedMessage(response.data.message);
       try {
         await addDoc(collection(db, "messages"), {
           text: message,
@@ -48,10 +54,11 @@ const SendMessage = () => {
           avatar: photoURL,
           createdAt: serverTimestamp(),
           uid,
-          translatedtext: receivedMessage
+          translatedtext: response.data.message
         });
 
       setMessage("");
+      scroll.current.scrollIntoView({ behavior: "smooth" })
     } catch (error) {
       console.error("Error sending message:", error);
     }
