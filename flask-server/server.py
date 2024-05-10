@@ -47,7 +47,7 @@ def receive_message():
         uid = data.get('uid')
         
         DEEPL_API_KEY = "4f50da36-2758-43d2-a887-77cc7a06db8c:fx"
-        
+
         translator = deepl.Translator(DEEPL_API_KEY)
 
         # Process the message data here as needed
