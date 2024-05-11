@@ -32,7 +32,7 @@ const SendMessage = ({ scroll }) => {
 
 
       // Send message data to Flask backend
-      const response = await axios.post("http://127.0.0.1:5000/send-message", {
+      const response = await axios.post("https://exotic-celestyn-citchennai-3903b27e.koyeb.app/send-message", {
         message: message,
         displayName: displayName,
         uid: uid,
